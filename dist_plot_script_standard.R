@@ -69,7 +69,9 @@ for(i in uniq_species){
           panel.grid.minor = element_blank(),
           legend.position = c(0.8,0.63),
           legend.text=element_text(size=30),
-          legend.title=element_text(size=32))+
+          legend.title=element_text(size=32),
+          plot.title=element_text(vjust = -20,hjust=0.1, size=22, family="Times New Roman", face="bold.italic"))+
+    ggtitle(i))+
     geom_point(data=subset(simple_data, descriptive == i), 
                aes(x=x, y=y, fill=period), 
                pch=21, colour = "grey30", size = 2.5)+
