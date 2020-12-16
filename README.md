@@ -7,6 +7,6 @@ Here I automate the process allowing for ease in distribution map plotting by it
 
 The first script works on the public BWARS data set available here: https://www.bwars.com/content/bwars-data-download
 
-<img src="Images/Agenioideus%20cinctellus%20iso.%20Day%201988%20.png" height="400"> 
+<img src="Images/Androniscus%20dentiger%20Verhoeff,%201908%20.jpg" height="400"> 
 
-![](Images/Agenioideus%20cinctellus%20iso.%20Day%201988%20.png)
+![](Images/Androniscus%20dentiger%20Verhoeff,%201908%20.jpg)
