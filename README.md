@@ -7,6 +7,4 @@ Here I automate the process allowing for ease in distribution map plotting by it
 
 The first script works on the public BWARS data set available here: https://www.bwars.com/content/bwars-data-download
 
-#<img src="Images/Androniscus%20dentiger%20Verhoeff,%201908%20.jpg" height="400"> 
-
 ![](Images/Androniscus%20dentiger%20Verhoeff,%201908%20.jpg)
