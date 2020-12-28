@@ -5,7 +5,6 @@ setwd("E:/Hymenoptera/United_Kingdom/Dis_maps/plotdistmaps")
 
 #Load libraries
 library(tidyverse)
-library(Cairo)
 library(purrr)
 library(svglite)
 
@@ -13,31 +12,38 @@ library(svglite)
 rawdata<-read_csv("20200821_BWARS_Public.csv")[,c("descriptive", "upper_date", "OS_grid_ref")]
 #Remove semicolons (files in Window can't handle them), this could be done before hand in the datafile
 rawdata$descriptive<-gsub(":", "", rawdata$descriptive)
-#Load in every 10km square coordinates for UK
-coords<-read_csv("gb_10kms.csv")
-#Rename coloumn names to be more uniform across datasets
-names(coords)<-c("OS_grid_ref", "x", "y")
-#Load in GB outline data
-gb <- read_csv("gb.txt")
-#Add 5 to coordinates because Stuart Ball said so (center points of each square)
-coords$x<-coords$x+5
-coords$y<-coords$y+5
-#Remove -1 and replace with NA because Stuart Ball said so
-gb$x[gb$x==-1]<-NA
-gb$y[gb$y==-1]<-NA
-#Merge UK 10km squares coordinates with record grid squares
-rawdata<-merge(rawdata, coords, by="OS_grid_ref")
 #Create upper year columns
 rawdata$upper_year<-str_sub(rawdata$upper_date,1,4)
 rawdata$upper_year<-as.numeric(rawdata$upper_year)
-#Generate simpler dataset to work with, needs upper date added
-#Find the latest recorded year for each species for each 10km it is recorded in
-rawdata<-aggregate(upper_year~x+y+descriptive, data=rawdata, FUN = max)
 #generate breaks in time series
 rawdata$period<-cut(rawdata$upper_year,
                     breaks=c(0,1980,2000,2030),
                     labels=c("Before 1980", "1980-99", "2000 onwards"),
                     right = F)
+
+#Load in every 10km square coordinates for UK
+coords<-read_csv("gb_10kms.csv")
+#Rename coloumn names to be more uniform across datasets
+names(coords)<-c("OS_grid_ref", "x", "y")
+#Add 5 to coordinates because Stuart Ball said so (center points of each square)
+coords$x<-coords$x+5
+coords$y<-coords$y+5
+
+#Load in GB outline data
+gb <- read_csv("gb.txt")
+#Remove -1 and replace with NA because Stuart Ball said so
+gb$x[gb$x==-1]<-NA
+gb$y[gb$y==-1]<-NA
+
+#Merge UK 10km squares coordinates with record grid squares
+rawdata<-merge(rawdata, coords, by="OS_grid_ref")
+#Create upper year columns
+rawdata$upper_year<-str_sub(rawdata$upper_date,1,4)
+rawdata$upper_year<-as.numeric(rawdata$upper_year)
+
+#Find the latest recorded year for each species for each 10km it is recorded in
+rawdata<-aggregate(upper_year~x+y+descriptive, data=rawdata, FUN = max)
+
 #Generate unique species list to loop through
 uniq_species <-unique(rawdata$descriptive)
 
